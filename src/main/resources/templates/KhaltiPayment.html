@@ -1,0 +1,67 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Khalti Payment</title>
+    <script src="https://khalti.com/static/khalti-checkout.js"></script>
+</head>
+<body>
+
+    <h3>Total: Rs. <span id="amount-text">10</span></h3>
+
+    <button id="payment-button">Pay with Khalti</button>
+
+    <script>
+        // Assume this is dynamically fetched from the backend (could use Thymeleaf or JS)
+        var orderId = "ORD123456";       // Example order ID
+        var amountInRupees = 10;         // Example amount
+        var amountInPaisa = amountInRupees * 100;
+
+        var config = {
+            publicKey: "test_public_key_dc74e7aefbdf4f4f82c3f80e0a63f3f9", // Replace with your test key
+            productIdentity: orderId,
+            productName: "FoodMart Order #" + orderId,
+            productUrl: "http://localhost:8080/foodmart/orders/" + orderId,
+            eventHandler: {
+                onSuccess(payload) {
+                    console.log("Success payload:", payload);
+                    // Send to backend to verify
+                    fetch("/khalti-verify", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            token: payload.token,
+                            amount: payload.amount
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log("Verification response:", data);
+                        alert("Payment successful and verified!");
+                        window.location.href = "/order-success";
+                    })
+                    .catch(err => {
+                        console.error("Verification failed", err);
+                        alert("Payment verified failed!");
+                    });
+                },
+                onError(error) {
+                    console.error("Khalti error:", error);
+                    alert("Payment error! Try again.");
+                },
+                onClose() {
+                    console.log("Khalti widget closed.");
+                }
+            }
+        };
+
+        var checkout = new KhaltiCheckout(config);
+        document.getElementById("payment-button").onclick = function () {
+            checkout.show({ amount: amountInPaisa });
+        };
+    </script>
+</body>
+</html>

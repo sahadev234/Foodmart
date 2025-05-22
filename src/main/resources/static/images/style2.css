@@ -1,0 +1,9 @@
+
+.category-carousel .category-img {
+  width: 100%;        /* Makes sure the images take the full width of the container */
+  height: auto;       /* Maintains aspect ratio */
+  object-fit: cover;  /* Ensures the images cover the space of the container without distortion */
+  max-width: 100px;   /* Adjust the size of the image to match your design */
+  max-height: 100px;  /* Adjust the size of the image to match your design */
+  border-radius: 10px;  /* Optional, adds rounded corners to the image */
+}

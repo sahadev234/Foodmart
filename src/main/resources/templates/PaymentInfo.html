@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>eSewa Payment</title>
+</head>
+<body>
+<h2>Redirecting to eSewa...</h2>
+
+<form action="https://rc-epay.esewa.com.np/api/epay/main" method="POST">
+    <input type="hidden" name="tAmt" th:value="${tAmt}">
+    <input type="hidden" name="amt" th:value="${amt}">
+    <input type="hidden" name="txAmt" th:value="${txAmt}">
+    <input type="hidden" name="psc" th:value="${psc}">
+    <input type="hidden" name="pdc" th:value="${pdc}">
+    <input type="hidden" name="scd" th:value="${scd}">
+    <input type="hidden" name="pid" th:value="${pid}">
+    <input type="hidden" name="su" th:value="${su}">
+    <input type="hidden" name="fu" th:value="${fu}">
+    <button type="submit">Pay with eSewa</button>
+</form> 
+
+</body>
+</html>
