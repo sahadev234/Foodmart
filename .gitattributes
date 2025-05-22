@@ -2,4 +2,6 @@
 *.cmd text eol=crlf
 *.java linguist-detectable=true
 *.html linguist-detectable=false
+* linguist-language=Java
+
 
